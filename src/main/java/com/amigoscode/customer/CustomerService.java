@@ -1,5 +1,6 @@
 package com.amigoscode.customer;
 
+import com.amigoscode.exception.ResourceNotFound;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class CustomerService {
 
     public Customer getCustomer(Integer id) {
         return customerDao.selectCustomerById(id)
-                .orElseThrow(()-> new IllegalArgumentException("customer with id [%s] not found".formatted(id)
+                .orElseThrow(()-> new ResourceNotFound("customer with id [%s] not found".formatted(id)
                 ));
     }
 }
