@@ -38,8 +38,12 @@ public class CustomerService {
                 customerRegistrationRequest.email(),
                 customerRegistrationRequest.age());
         customerDao.insertCustomer(customer);
+    }
 
-
-
+    public void deleteCustomerById(Integer id){
+        if(!customerDao.existsPersonWithId(id)){
+            throw new ResourceNotFoundException("customer with id [%s] not found".formatted(id));
+        }
+        customerDao.deleteCustomerById(id);
     }
 }
