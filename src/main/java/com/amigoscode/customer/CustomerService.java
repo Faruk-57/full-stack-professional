@@ -1,6 +1,7 @@
 package com.amigoscode.customer;
 
 import com.amigoscode.exception.DuplicateResourceException;
+import com.amigoscode.exception.RequestValidationException;
 import com.amigoscode.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class CustomerService {
         return customerDao.selectAllCustomers();
     }
 
-    public Customer getCustomer(Integer id) {
-        return customerDao.selectCustomerById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("customer with id [%s] not found".formatted(id)
+    public Customer getCustomer(Integer customerId) {
+        return customerDao.selectCustomerById(customerId)
+                .orElseThrow(()-> new ResourceNotFoundException("customer with id [%s] not found".formatted(customerId)
                 ));
     }
 
@@ -40,10 +41,41 @@ public class CustomerService {
         customerDao.insertCustomer(customer);
     }
 
-    public void deleteCustomerById(Integer id){
-        if(!customerDao.existsPersonWithId(id)){
-            throw new ResourceNotFoundException("customer with id [%s] not found".formatted(id));
+    public void deleteCustomerById(Integer customerId){
+        if(!customerDao.existsPersonWithId(customerId)){
+            throw new ResourceNotFoundException("customer with id [%s] not found".formatted(customerId));
         }
-        customerDao.deleteCustomerById(id);
+        customerDao.deleteCustomerById(customerId);
+    }
+
+    public void updateCustomer(Integer customerId, CustomerUpdateRequest updateRequest) {
+        Customer customer = getCustomer(customerId);
+
+        boolean changes = false;
+
+        if(updateRequest.name() != null && !customer.getName().equals(updateRequest.name())) {
+            customer.setName(updateRequest.name());
+            customerDao.insertCustomer(customer);
+            changes = true;
+        }
+        if(updateRequest.email() != null && !customer.getEmail().equals(updateRequest.email())) {
+            if(customerDao.existsPersonWithEmail(updateRequest.email())) {
+                throw new DuplicateResourceException("email already taken");
+            }
+            customer.setEmail((updateRequest.email()));
+            customerDao.insertCustomer(customer);
+            changes = true;
+        }
+        if(updateRequest.age() != null && !customer.getAge().equals(updateRequest.age())) {
+            customer.setAge(updateRequest.age());
+            customerDao.insertCustomer(customer);
+            changes = true;
+        }
+        if (!changes){
+            throw new RequestValidationException("no data changes found");
+        }
+        customerDao.updateCustomer(customer);
+
+
     }
 }
