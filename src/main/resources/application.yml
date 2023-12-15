@@ -11,11 +11,11 @@ spring:
       password: password
     jpa:
       hibernate:
-        ddl-auto: create-drop
+        ddl-auto: none
       properties:
-       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-      show-sql: false
-main:
-    web-application-type: servlet
+      show-sql: true
+    main:
+      web-application-type: servlet
