@@ -80,7 +80,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
     @Override
     public boolean existsPersonWithId(Integer id) {
         var sql = """
-                SELECT id
+                SELECT count(id)
                 FROM customer
                 WHERE id = ?
                 """;
