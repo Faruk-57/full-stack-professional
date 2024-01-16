@@ -56,7 +56,6 @@ public class CustomerService {
 
         if(updateRequest.name() != null && !customer.getName().equals(updateRequest.name())) {
             customer.setName(updateRequest.name());
-            customerDao.updateCustomer(customer);
             changes = true;
         }
         if(updateRequest.email() != null && !customer.getEmail().equals(updateRequest.email())) {
@@ -64,12 +63,10 @@ public class CustomerService {
                 throw new DuplicateResourceException("email already taken");
             }
             customer.setEmail((updateRequest.email()));
-            customerDao.updateCustomer(customer);
             changes = true;
         }
         if(updateRequest.age() != null && !customer.getAge().equals(updateRequest.age())) {
             customer.setAge(updateRequest.age());
-            customerDao.updateCustomer(customer);
             changes = true;
         }
         if (!changes){
