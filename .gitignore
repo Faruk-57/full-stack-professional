@@ -1,5 +1,8 @@
 HELP.md
-target/
+**/target/
+**/.idea/
+**/node_modules/
+**/.DS_store
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
