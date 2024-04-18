@@ -4,6 +4,7 @@ HELP.md
 **/.idea/
 **/node_modules/
 **/.DS_store
+**/*.iml
 !backend/.mvn/wrapper/maven-wrapper.jar
 =======
 target/
