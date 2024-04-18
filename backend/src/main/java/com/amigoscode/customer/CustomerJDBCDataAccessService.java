@@ -62,6 +62,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
                 FROM customer
                 WHERE name = ?
                 """;
+
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
         return count != null && count > 0;
     }
