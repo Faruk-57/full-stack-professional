@@ -13,6 +13,7 @@ public class CustomerService {
     private final CustomerDao customerDao;
 
     public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+
         this.customerDao = customerDao;
     }
 
@@ -55,7 +56,6 @@ public class CustomerService {
 
         if(updateRequest.name() != null && !customer.getName().equals(updateRequest.name())) {
             customer.setName(updateRequest.name());
-            customerDao.insertCustomer(customer);
             changes = true;
         }
         if(updateRequest.email() != null && !customer.getEmail().equals(updateRequest.email())) {
@@ -63,12 +63,10 @@ public class CustomerService {
                 throw new DuplicateResourceException("email already taken");
             }
             customer.setEmail((updateRequest.email()));
-            customerDao.insertCustomer(customer);
             changes = true;
         }
         if(updateRequest.age() != null && !customer.getAge().equals(updateRequest.age())) {
             customer.setAge(updateRequest.age());
-            customerDao.insertCustomer(customer);
             changes = true;
         }
         if (!changes){

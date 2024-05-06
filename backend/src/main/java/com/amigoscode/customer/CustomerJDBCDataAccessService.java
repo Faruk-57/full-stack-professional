@@ -1,7 +1,7 @@
 package com.amigoscode.customer;
 
+
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,14 +46,13 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
                 INSERT INTO customer(name, email ,age)
                 VALUES (?, ?, ?)
                 """;
-        int result = jdbcTemplate.update(
-                sql,
-                customer.getName(),
-                customer.getEmail(),
-                customer.getAge()
-        );
-
-        System.out.println("jdbcTemplate.update = " +result);
+     int result = jdbcTemplate.update(
+             sql,
+             customer.getName(),
+             customer.getEmail(),
+             customer.getAge()
+     );
+        System.out.println("jdbcTemplate.update = " + result);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
     @Override
     public boolean existsPersonWithId(Integer id) {
         var sql = """
-                SELECT id, name, email, age 
+                SELECT count(id)
                 FROM customer
                 WHERE id = ?
                 """;
@@ -92,7 +91,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
     @Override
     public void updateCustomer(Customer update) {
         if (update.getName() != null) {
-            var sql = "UPDATE customer SET name = ? WHERE id = ?";
+            String sql = "UPDATE customer SET name = ? WHERE id = ?";
             int result = jdbcTemplate.update(
                     sql,
                     update.getName(),
@@ -101,7 +100,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
             System.out.println("update customer name result = " + result);
             }
         if (update.getEmail() != null) {
-            var sql = "UPDATE customer SET email = ? WHERE id = ?";
+            String sql = "UPDATE customer SET email = ? WHERE id = ?";
             int result = jdbcTemplate.update(
                     sql,
                     update.getEmail(),
@@ -110,7 +109,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao{
             System.out.println("update customer email result = " + result);
         }
         if (update.getAge() != null) {
-            var sql = "UPDATE customer SET age = ? WHERE id = ?";
+            String sql = "UPDATE customer SET age = ? WHERE id = ?";
             int result = jdbcTemplate.update(
                     sql,
                     update.getAge(),

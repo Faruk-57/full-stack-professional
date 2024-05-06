@@ -1,6 +1,15 @@
 HELP.md
+<<<<<<< HEAD
+**/target/
+**/.idea/
+**/node_modules/
+**/.DS_store
+**/*.iml
+!backend/.mvn/wrapper/maven-wrapper.jar
+=======
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!../.mvn/wrapper/maven-wrapper.jar
+>>>>>>> 078a1c513f0c71357b5c511992f3519b64360f54
 !**/src/main/**/target/
 !**/src/test/**/target/
 
